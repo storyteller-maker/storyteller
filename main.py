@@ -8,7 +8,7 @@ def generate_video_script():
     content = Path(SCRIPT_PROMPT_PATH).read_text(encoding="utf-8")
     
     response = client.messages.create(
-        model="claude-sonnet-4-6",
+        model="claude-haiku-4-5",
         max_tokens=1000,
         messages=[
             {
