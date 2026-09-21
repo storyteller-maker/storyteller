@@ -47,4 +47,6 @@ You should try to invoke classically American and nostalgic imagery.
 PACING
 Each story beat should be about 5-10s (12-30 words) long. There should be a total of 6-9 beats in each story.
 
+Your output should always be valid json. Always exclude the json fence for easier parsing.
+
 Your characters need to be original and not from any existing media. You can use old or new characters, scenarios, and locations. Just try to make it engaging and original.

@@ -1,28 +1,17 @@
-from pathlib import Path
-from anthropic import Anthropic
 from dotenv import load_dotenv
+print("Loading environment")
+load_dotenv(".env")
+
+from anthropic import Anthropic
+from gen.script import gen_script, correct_json, validate_script
 import os
 
-load_dotenv(".env")
 client = Anthropic()
-SCRIPT_PROMPT_PATH = "prompts/script.md"
-SOUL_PROMPT_PATH = "prompts/soul.md"
 
-soul = Path(SOUL_PROMPT_PATH).read_text(encoding="utf-8")
-gen_script = Path(SCRIPT_PROMPT_PATH).read_text(encoding="utf-8")
+print("Generating script")
+script = gen_script(client)
 
-response = client.messages.create(
-    model="claude-haiku-4-5-20251001",
-    max_tokens=1000,
-    messages=[
-        {
-            "role": "user",
-            "content": [
-                {"type": "text", "text": "Here is who you are: " + soul},
-                {"type": "text", "text": "Now generate today's script: " + gen_script},
-            ],
-        }
-    ],
-)
-
-print(response.content[0].text)
+print("Validating script")
+script = validate_script(client, script)
+if not script:
+    raise Exception("Failed to produce a valid script.")
